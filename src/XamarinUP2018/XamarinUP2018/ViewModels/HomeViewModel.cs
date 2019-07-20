@@ -12,28 +12,32 @@ namespace XamarinUP2018.ViewModels
 {
     public sealed class HomeViewModel : ViewModelBase
     {
-        private string text;
         private readonly IPageDialogService pageDialogService;
 
-        public string Text {
+        public HomeViewModel(INavigationService navigationService
+            , IPageDialogService pageDialogService) : base(navigationService)
+        {
+            this.pageDialogService = pageDialogService;
+            ShowAlert = new DelegateCommand(async () => await ExecuteShowAllert())
+                .ObservesCanExecute(() => IsNotBusy);
+        }
+
+        private string text;
+        public string Text
+        {
             get => text;
             set => SetProperty(ref text, value);
         }
 
         public ICommand ShowAlert { get; }
 
-        public HomeViewModel(INavigationService navigationService, IPageDialogService pageDialogService) : base(navigationService)
-        {
-            this.pageDialogService = pageDialogService;
-            ShowAlert = new DelegateCommand(async () => await ExecuteShowAllert());
-        }
-
-
         private async Task ExecuteShowAllert()
         {
-            await Task.Delay(5000);
-            await pageDialogService.DisplayAlertAsync("Hello", "The Message", "Ok");
+            await ExecuteBusyAction(async () =>
+            {
+                await Task.Delay(5000);
+                await pageDialogService.DisplayAlertAsync("Hello", "The Message", "Ok");
+            });
         }
-
     }
 }

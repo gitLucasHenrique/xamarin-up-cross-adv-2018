@@ -8,12 +8,14 @@ namespace XamarinUP2018.ViewModels
 {
     public abstract class ViewModelBase : BindableBase, INavigationAware
     {
-        protected ViewModelBase(INavigationService navigationService) {
+        protected ViewModelBase(INavigationService navigationService)
+        {
             NavigationService = navigationService;
         }
 
-        private bool isBusy;
+        public INavigationService NavigationService { get; }
 
+        private bool isBusy;
         public bool IsBusy
         {
             get => isBusy;
@@ -28,8 +30,9 @@ namespace XamarinUP2018.ViewModels
                 return;
             try
             {
+                IsBusy = true;
                 await theBusyAction();
-                IsBusy = false;
+
             }
             catch (Exception ex)
             {
@@ -39,15 +42,11 @@ namespace XamarinUP2018.ViewModels
             {
                 IsBusy = false;
             }
-
         }
-        public INavigationService NavigationService { get; }
+
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters) { }
-
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
-
         public virtual void OnNavigatingTo(INavigationParameters parameters) { }
-
     }
 }

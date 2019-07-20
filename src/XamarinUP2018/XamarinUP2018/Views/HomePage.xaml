@@ -4,13 +4,16 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="XamarinUP2018.Views.HomePage">
+             x:Class="XamarinUP2018.Views.HomePage"
+             Visual="Material">
     <ContentPage.Content>
         <StackLayout Padding="20">
             <Entry Text="{Binding Text}" />
             <Label Text="{Binding Text}" />
-            <Button Text="Alert" Command="{Binding ShowAlert}" IsEnabled="{Binding IsNotBusy}" />
-            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+            <Button Visual="Material" Text="Alert" Command="{Binding ShowAlert}" />
+            <ActivityIndicator 
+                IsVisible="{Binding IsBusy}" 
+                IsRunning="{Binding IsBusy}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
